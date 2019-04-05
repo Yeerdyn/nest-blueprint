@@ -1,6 +1,9 @@
 # dependencies
 /node_modules
 
+# documentation
+/documentation
+
 # misc
 .idea
 .vscode
