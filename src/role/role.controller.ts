@@ -1,16 +1,39 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { RoleService } from './role.service';
 import { ApiOperation, ApiModelProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumberString } from 'class-validator';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class GetRoleDto {
   @ApiModelProperty()
   @IsNotEmpty()
-  @IsNumberString()
+  @IsNumber()
   readonly id: number;
 }
 
 export class CreateRoleDto {
+  @ApiModelProperty()
+  @IsNotEmpty()
+  readonly caption: string;
+  @ApiModelProperty()
+  @IsNotEmpty()
+  readonly description: string;
+}
+
+export class UpdateRoleDto {
+  @ApiModelProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  readonly id: number;
   @ApiModelProperty()
   @IsNotEmpty()
   readonly caption: string;
@@ -38,12 +61,33 @@ export class RoleController {
       throw new HttpException('Entity not found', HttpStatus.NOT_FOUND);
     }
 
-    return { success: true, data: role};
+    return { success: true, data: role };
   }
 
-  @Post(':id')
+  @Post()
   @ApiOperation({ title: 'Create the role.' })
   async createRole(@Body() createRoleDto: CreateRoleDto): Promise<any> {
-    return { success: true, data: await this.roleRepository.create(createRoleDto)};
+    return {
+      success: true,
+      data: await this.roleRepository.create(createRoleDto),
+    };
+  }
+
+  @Put()
+  @ApiOperation({ title: 'Update the role.' })
+  async updateRole(@Body() updateRoleDto: UpdateRoleDto): Promise<any> {
+    return {
+      success: true,
+      data: await this.roleRepository.update(updateRoleDto),
+    };
+  }
+
+  @Delete()
+  @ApiOperation({ title: 'Delete the role.' })
+  async deleteRole(@Body() getRoleDto: GetRoleDto): Promise<any> {
+    return {
+      success: true,
+      data: await this.roleRepository.deleteById(getRoleDto),
+    };
   }
 }
