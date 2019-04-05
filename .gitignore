@@ -4,6 +4,9 @@
 # documentation
 /documentation
 
+# build
+/dist
+
 # misc
 .idea
 .vscode
