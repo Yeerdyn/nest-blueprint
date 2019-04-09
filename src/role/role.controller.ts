@@ -10,38 +10,10 @@ import {
   Query,
 } from '@nestjs/common';
 import { RoleService } from './role.service';
-import { ApiOperation, ApiModelProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
+import { CreateRoleDto, GetRoleDto, UpdateRoleDto } from './role.dto';
 
-export class GetRoleDto {
-  @ApiModelProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  readonly id: number;
-}
-
-export class CreateRoleDto {
-  @ApiModelProperty()
-  @IsNotEmpty()
-  readonly caption: string;
-  @ApiModelProperty()
-  @IsNotEmpty()
-  readonly description: string;
-}
-
-export class UpdateRoleDto {
-  @ApiModelProperty()
-  @IsNotEmpty()
-  @IsNumber()
-  readonly id: number;
-  @ApiModelProperty()
-  @IsNotEmpty()
-  readonly caption: string;
-  @ApiModelProperty()
-  @IsNotEmpty()
-  readonly description: string;
-}
-
+@ApiUseTags('role')
 @Controller('role')
 export class RoleController {
   constructor(private readonly roleRepository: RoleService) {}
